@@ -1,4 +1,5 @@
 var express = require('express');
+var open = require('open');
 var app = express();
 
 /************************************************************
@@ -85,9 +86,17 @@ if (!process.env.PRODUCTION) {
  *****************/
 
 var port = process.env.PORT || 8080;
-var server = app.listen(port, function () {
-  var host = server.address().address;
-  var port = server.address().port;
+// var server = app.listen(port, function () {
+//   var host = server.address().address || 'localhost';
+//   var port = server.address().port;
 
-  console.log('Essential React listening at http://%s:%s', host, port);
+//   console.log('Essential React listening at http://%s:%s', host, port);
+// });
+
+var server = app.listen(port, function (err) {
+    if (err) {
+        console.log(err);
+    } else {
+        open('http://localhost:'+port);
+    }
 });
