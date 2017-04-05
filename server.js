@@ -89,7 +89,7 @@ if (!process.env.PRODUCTION) {
  *
  *****************/
 
-var port = process.env.PORT || 8080;
+var port = process.env.PORT || 8000;
 // var server = app.listen(port, function () {
 //   var host = server.address().address || 'localhost';
 //   var port = server.address().port;
