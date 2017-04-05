@@ -4,7 +4,7 @@ export default function login(state = false, action) {
 	console.log(">>action" ,action);
 	switch (action.type) {
 		case 'LOGIN':
-			fetch('http://10.1.22.109/api/v1/login', {
+			fetch('http://api.youndevice.com/api/v1/login', {
 				method: 'POST',
 								mode: 'cors',
 
