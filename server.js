@@ -23,8 +23,12 @@ app.get('/bundle.js', function(req, res) {
     res.redirect('//localhost:9090/build/bundle.js');
   }
 });
-
-// Serve aggregate stylesheet depending on environment
+app.use(function (req, res, next) {
+  res.setHeader('Access-Control-Allow-Origin', 'http://localhost:8080');
+  res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
+  res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With,content-type');
+  next()
+});
 app.get('/style.css', function(req, res) {
   if (process.env.PRODUCTION) {
     res.sendFile(__dirname + '/build/style.css');
