@@ -1,29 +1,32 @@
 import $ from 'jquery'
-export const loginSuccess = (loginID, password) => {
-	return ({type: 'LOGIN', loginID, password})
+import {cookie } from 'react-cookie'
+
+export const loginSuccess = (status) => {
+	return ({type: 'LOGIN', status})
 };
 export const loginError = (error) => {
 	return ({error, type: 'LOGGED_FAILED'});
 };
-
-
 export const login = (loginID, password) => {
 	return dispatch =>
 			fetch('http://api.youndevice.com/api/v1/login', {
 				method: 'POST',
-				mode: 'no-cors',
-
 				body: JSON.stringify({
-					emailId: "tushar.saxena@tothenew.com",
-					password: "tushar"
+					emailId: loginID,
+					password: password
 				})
 			}).then(response => {
-				console.log(response)
-				if (response.status >= 200 && response.status < 300) {
-					console.log(response);
-					dispatch(loginSuccess(response));
+				if (response.type === 'opaque') {
+					console.log('Received a response, but it\'s opaque so can\'t examine it');
+					return;
+				}
+				if (response.status == 200 ) {
+					response.json().then(function(json) {
+						cookie.save('loginToken', json.data && json.data["X-AUTH-TOKEN"], { path: '/' });
+						dispatch(loginSuccess(json.status));
+					});
 				} else {
-					const error = new Error(response.statusText);
+					const error = new Error(response.status);
 					error.response = response;
 					dispatch(loginError(error));
 					throw error;
@@ -32,3 +35,4 @@ export const login = (loginID, password) => {
 				console.log('request failed', error);
 			});
 };
+
