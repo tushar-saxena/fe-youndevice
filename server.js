@@ -16,14 +16,13 @@ var app = express();
  ************************************************************/
 
 // Serve application file depending on environment
-console.log(process.env,"?????????Environment")
+console.log(process.env.PRODUCTION,"process.env.PRODUCTION")
 app.get('/bundle.js', function(req, res) {
-  res.sendFile(__dirname + '/build/bundle.js');
-  //if (process.env.PRODUCTION) {
-  //  res.sendFile(__dirname + '/build/bundle.js');
-  //} else {
-  //  res.redirect('//localhost:9090/build/bundle.js');
-  //}
+  if (process.env.PRODUCTION) {
+    res.sendFile(__dirname + '/build/bundle.js');
+  } else {
+    res.redirect('//localhost:9090/build/bundle.js');
+  }
 });
 app.use(function (req, res, next) {
   res.setHeader('Access-Control-Allow-Origin', '*');
@@ -32,13 +31,11 @@ app.use(function (req, res, next) {
   next()
 });
 app.get('/style.css', function(req, res) {
-  res.sendFile(__dirname + '/build/style.css');
-
-  //if (process.env.PRODUCTION) {
-  //  res.sendFile(__dirname + '/build/style.css');
-  //} else {
-  //  res.redirect('//localhost:9090/build/style.css');
-  //}
+  if (process.env.PRODUCTION) {
+    res.sendFile(__dirname + '/build/style.css');
+  } else {
+    res.redirect('//localhost:9090/build/style.css');
+  }
 });
 
 app.use(express.static(__dirname + '/build'));
@@ -70,8 +67,9 @@ app.post('/home', function(req, res) {
  *************************************************************/
 
 if (!process.env.PRODUCTION) {
-  var webpack = require('webpack');
-  var WebpackDevServer = require('webpack-dev-server');
+var webpack = require('webpack');
+var WebpackDevServer = require('webpack-dev-server');
+console.log(">inside for testing")
   var config = require('./webpack.local.config');
 
   new WebpackDevServer(webpack(config), {
@@ -80,12 +78,12 @@ if (!process.env.PRODUCTION) {
     noInfo: true,
     historyApiFallback: true
   }).listen(9090, 'localhost', function (err, result) {
+            console.log(">Rn on 9090")
     if (err) {
       console.log(err);
     }
   });
 }
-
 
 /******************
  *
