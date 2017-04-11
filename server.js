@@ -16,12 +16,14 @@ var app = express();
  ************************************************************/
 
 // Serve application file depending on environment
+console.log(process.env,"?????????Environment")
 app.get('/bundle.js', function(req, res) {
-  if (process.env.PRODUCTION) {
-    res.sendFile(__dirname + '/build/bundle.js');
-  } else {
-    res.redirect('//localhost:9090/build/bundle.js');
-  }
+  res.sendFile(__dirname + '/build/bundle.js');
+  //if (process.env.PRODUCTION) {
+  //  res.sendFile(__dirname + '/build/bundle.js');
+  //} else {
+  //  res.redirect('//localhost:9090/build/bundle.js');
+  //}
 });
 app.use(function (req, res, next) {
   res.setHeader('Access-Control-Allow-Origin', '*');
@@ -30,11 +32,13 @@ app.use(function (req, res, next) {
   next()
 });
 app.get('/style.css', function(req, res) {
-  if (process.env.PRODUCTION) {
-    res.sendFile(__dirname + '/build/style.css');
-  } else {
-    res.redirect('//localhost:9090/build/style.css');
-  }
+  res.sendFile(__dirname + '/build/style.css');
+
+  //if (process.env.PRODUCTION) {
+  //  res.sendFile(__dirname + '/build/style.css');
+  //} else {
+  //  res.redirect('//localhost:9090/build/style.css');
+  //}
 });
 
 app.use(express.static(__dirname + '/build'));
