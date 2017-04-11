@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import LoginPage from '../containers/login'
+import RegisterModalButton from './registerModal.js';
 
 export default class Main extends Component {
 	constructor(props) {
@@ -8,7 +9,7 @@ export default class Main extends Component {
 	render() {
 		return (
 				<div>
-					<h1>Connecto</h1>
+					<RegisterModalButton className="register-button btn-primary"/>
 					<LoginPage/>
 				</div>
 		)
