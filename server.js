@@ -101,6 +101,6 @@ var server = app.listen(port, function (err) {
 	if (err) {
 		console.log(err);
 	} else {
-		open('http://localhost:' + port);
+		console.log('Example app listening on port!',port);
 	}
 });
