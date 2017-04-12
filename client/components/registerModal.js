@@ -1,6 +1,6 @@
 import React,{Component} from 'react';
 import {ModalContainer, ModalDialog} from 'react-modal-dialog';
-import RegisterForm from './regiter.js';
+import RegisterForm from './register.js';
 
 export default
 class RegisterModalButton extends Component {
@@ -9,7 +9,6 @@ class RegisterModalButton extends Component {
 		this.state = {
 			showModal: false
 		}
-		console.log(">>>this.props,",this.props)
 		this.openModal = () => {
 			console.log(">>>>>>>>>>>>>>>>>>>>.open model")
 			this.setState({showModal: true});

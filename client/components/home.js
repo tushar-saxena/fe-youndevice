@@ -10,7 +10,7 @@ export default class Home extends Component {
 		console.log(this.props);
 		return (
 				<div className="overview-page" key="overview">
-					<Link to="/dashboard/reports" className="pull-right btn btn-primary btn-outline btn-rounded">Reports</Link>
+						<a className="pull-right btn btn-primary btn-outline btn-rounded"> Logout</a>
 					<h2>Home <small></small></h2>
 					<Jumbotron>
 						<h1>Welcome!</h1>!
