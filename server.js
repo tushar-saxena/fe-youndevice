@@ -16,45 +16,44 @@ var app = express();
  ************************************************************/
 
 // Serve application file depending on environment
-console.log(process.env.PRODUCTION,"process.env.PRODUCTION")
-app.get('/bundle.js', function(req, res) {
-  if (process.env.PRODUCTION) {
-    res.sendFile(__dirname + '/build/bundle.js');
-  } else {
-    res.redirect('//localhost:9090/build/bundle.js');
-  }
+app.get('/bundle.js', function (req, res) {
+	if (process.env.NODE_ENV == "production") {
+		res.sendFile(__dirname + '/build/bundle.js');
+	} else {
+		res.redirect('//localhost:9090/build/bundle.js');
+	}
 });
 app.use(function (req, res, next) {
-  res.setHeader('Access-Control-Allow-Origin', '*');
-  res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
-  res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With,content-type');
-  next()
+	res.setHeader('Access-Control-Allow-Origin', '*');
+	res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
+	res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With,content-type');
+	next()
 });
-app.get('/style.css', function(req, res) {
-  if (process.env.PRODUCTION) {
-    res.sendFile(__dirname + '/build/style.css');
-  } else {
-    res.redirect('//localhost:9090/build/style.css');
-  }
+app.get('/style.css', function (req, res) {
+	if (process.env.NODE_ENV == "production") {
+		res.sendFile(__dirname + '/build/style.css');
+	} else {
+		res.redirect('//localhost:9090/build/style.css');
+	}
 });
 
 app.use(express.static(__dirname + '/build'));
 
 // Serve index page
-app.get('*', function(req, res) {
-  res.sendFile(__dirname + '/client/index.html');
+app.get('*', function (req, res) {
+	res.sendFile(__dirname + '/client/index.html');
 });
 
-app.post('/landing', function(req, res) {
-  res.json({
-    title: "Landing Page"
-  });
+app.post('/landing', function (req, res) {
+	res.json({
+		title: "Landing Page"
+	});
 });
 
-app.post('/home', function(req, res) {
-  res.json({
-    title: "Home Page"
-  });
+app.post('/home', function (req, res) {
+	res.json({
+		title: "Home Page"
+	});
 });
 
 
@@ -66,23 +65,22 @@ app.post('/home', function(req, res) {
  *
  *************************************************************/
 
-if (!process.env.PRODUCTION) {
-var webpack = require('webpack');
-var WebpackDevServer = require('webpack-dev-server');
-console.log(">inside for testing")
-  var config = require('./webpack.local.config');
+if (process.env.NODE_ENV != "production") {
+	var webpack = require('webpack');
+	var WebpackDevServer = require('webpack-dev-server');
+	var config = require('./webpack.local.config');
 
-  new WebpackDevServer(webpack(config), {
-    publicPath: config.output.publicPath,
-    hot: true,
-    noInfo: true,
-    historyApiFallback: true
-  }).listen(9090, 'localhost', function (err, result) {
-            console.log(">Rn on 9090")
-    if (err) {
-      console.log(err);
-    }
-  });
+	new WebpackDevServer(webpack(config), {
+		publicPath: config.output.publicPath,
+		hot: true,
+		noInfo: true,
+		historyApiFallback: true
+	}).listen(9090, 'localhost', function (err, result) {
+				console.log(">Rn on 9090")
+				if (err) {
+					console.log(err);
+				}
+			});
 }
 
 /******************
@@ -100,9 +98,9 @@ var port = process.env.PORT || 8000;
 // });
 
 var server = app.listen(port, function (err) {
-    if (err) {
-        console.log(err);
-    } else {
-        open('http://localhost:'+port);
-    }
+	if (err) {
+		console.log(err);
+	} else {
+		open('http://localhost:' + port);
+	}
 });
