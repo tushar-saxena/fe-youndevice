@@ -1,5 +1,5 @@
 import $ from 'jquery'
-import {cookie } from 'react-cookie'
+import cookie from 'react-cookie'
 
 export const loginSuccess = (status) => {
 	return ({type: 'LOGIN', status})

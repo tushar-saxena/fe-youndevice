@@ -76,7 +76,6 @@ if (process.env.NODE_ENV != "production") {
 		noInfo: true,
 		historyApiFallback: true
 	}).listen(9090, 'localhost', function (err, result) {
-				console.log(">Rn on 9090")
 				if (err) {
 					console.log(err);
 				}
