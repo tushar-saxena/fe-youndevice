@@ -1,6 +1,5 @@
 import $ from 'jquery'
 import cookie from 'react-cookie'
-
 export const loginSuccess = (status) => {
 	return ({type: 'LOGIN', status})
 };
@@ -23,9 +22,9 @@ export const login = (loginID, password) => {
 					console.log('Received a response, but it\'s opaque so can\'t examine it');
 					return;
 				}
-				if (response.status == 200 ) {
-					response.json().then(function(json) {
-						cookie.save('loginToken', json.data && json.data["X-AUTH-TOKEN"], { path: '/' });
+				if (response.status == 200) {
+					response.json().then(function (json) {
+						cookie.save('loginToken', json.data && json.data["X-AUTH-TOKEN"], {path: '/'});
 						dispatch(loginSuccess(json.status));
 					});
 				} else {
@@ -39,30 +38,25 @@ export const login = (loginID, password) => {
 			});
 };
 export const register = (data) => {
-	console.log(data,">>>>>>>>>>>>>>>>>>>>>>")
-	console.log("Whatss happensss")
 	return dispatch => {
-		 console.log(">>>>>>>....insidebebebeb")
+		console.log(">>>>>>>....insidebebebeb")
 		fetch('http://api.youndevice.com/api/v1/user/register', {
 			method: 'POST',
-			body: JSON.stringify({
-				emailId: "j",
-				password: "m"
-			})		}).then(response => {
-			console.log(">.insideee")
+			body: JSON.stringify(data.user)
+		}).then(response => {
 			if (response.type === 'opaque') {
 				console.log('Received a response, but it\'s opaque so can\'t examine it');
 				return;
 			}
 			if (response.status == 200) {
 				response.json().then(function (json) {
-					console.log(json)
-					dispatch(loginSuccess(json.status));
+					console.log("RSPONESE",json)
+					dispatch(registerSuccess(json.status));
 				});
 			} else {
 				const error = new Error(response.status);
 				error.response = response;
-				dispatch(loginError(error));
+				dispatch(registerError(error));
 				throw error;
 			}
 		}).catch(error => {

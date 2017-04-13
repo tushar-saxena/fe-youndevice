@@ -75,7 +75,7 @@ const mapStateToProps = (state, ownProps) => {
 };
 const mapDispatchToProps = (dispatch, ownProps) => {
 	return {
-		register: (user)=> register(user)
+		register: (user) => dispatch(register(user))
 	}
 };
 const RegisterContainer = connect(
