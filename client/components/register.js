@@ -10,14 +10,15 @@ class RegisterForm extends Component {
 				email: "",
 				password: ""
 			}
-
 		};
 		this.onChange = this.onChange.bind(this);
 		this.onSubmit = this.onSubmit.bind(this);
 	}
 
 	onChange = (e)=> {
-		this.setState({[ e.target.name]: e.target.value})
+		var user = this.state.user;
+		user[e.target.name] = e.target.value;
+		this.setState({user: user});
 	};
 	onSubmit = (e)=> {
 		e.preventDefault();
@@ -33,7 +34,7 @@ class RegisterForm extends Component {
 
 	render() {
 
-		const {state: {firstname,lastname,email,password},props: {register}} = this;
+		const {user: {firstname,lastname,email,password}} = this.state;
 		return (
 				<form onSubmit={this.onSubmit}>
 					<h1>Join Us....... </h1>
