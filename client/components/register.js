@@ -1,13 +1,18 @@
 import React, { Component } from 'react'
+import {browserHistory } from 'react-router'
+import Router from 'react-router';
+
+import {pushState} from 'react-router-redux';
+
 export default
 class RegisterForm extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
 			user: {
-				firstname: "dd",
-				lastname: "dd",
-				email: "",
+				firstName: "dd",
+				lastName: "dd",
+				emailId: "",
 				password: ""
 			}
 		};
@@ -20,37 +25,43 @@ class RegisterForm extends Component {
 		user[e.target.name] = e.target.value;
 		this.setState({user: user});
 	};
+	componentWillReceiveProps(nextProps) {
+		this.checkRegister(nextProps.register);
+	}
+
+	checkRegister(isAuthenticated) {
+		if (isAuthenticated) {
+			browserHistory.push('/home')
+		} else {
+			this.setState({errorMessage: "Wrong id or password"})
+		}
+	}
 	onSubmit = (e)=> {
 		e.preventDefault();
-		this.props.register({
-			user: {
-				firstname: this.state.firstname,
-				lastname: this.state.lastname,
-				email: this.state.email,
-				password: this.state.password
-			}
+		this.props.onRegister({
+			user: this.state.user
 		})
 	};
 
 	render() {
 
-		const {user: {firstname,lastname,email,password}} = this.state;
+		const {user: {firstName,lastName,emailId,password}} = this.state;
 		return (
 				<form onSubmit={this.onSubmit}>
 					<h1>Join Us....... </h1>
 					<div className="form-group">
 						<label  className="control-label">First Name:</label>
-						<input type="text" className="form-control" name="firstname" value={firstname}
+						<input type="text" className="form-control" name="firstName" value={firstName}
 								onChange={this.onChange}/>
 					</div>
 					<div className="form-group">
 						<label  className="control-label">Last Name:</label>
-						<input type="text" className="form-control" name="lastname" value={lastname}
+						<input type="text" className="form-control" name="lastName" value={lastName}
 								onChange={this.onChange}/>
 					</div>
 					<div className="form-group">
 						<label  className="control-label">Email:</label>
-						<input type="email" name="email" className="form-control" value={email}
+						<input type="email" name="emailId" className="form-control" value={emailId}
 								onChange={this.onChange}/>
 					</div>
 
@@ -76,7 +87,7 @@ const mapStateToProps = (state, ownProps) => {
 };
 const mapDispatchToProps = (dispatch, ownProps) => {
 	return {
-		register: (user) => dispatch(register(user))
+		onRegister: (user) => dispatch(register(user))
 	}
 };
 const RegisterContainer = connect(

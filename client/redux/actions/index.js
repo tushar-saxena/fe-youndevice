@@ -1,7 +1,7 @@
 import $ from 'jquery';
 import cookie from 'react-cookie';
 
-
+import React, { Component } from 'react'
 export const loginSuccess = (status) => ({type: 'LOGIN', status});
 
 export const loginError = (status) => ({type: 'LOGGED_FAILED', status});
@@ -38,28 +38,20 @@ export const login = (loginID, password) => dispatch =>
 		});
 
 export const register = (data) => dispatch => {
-	console.log(">>>>>>>....insidebebebeb", data.user)
-	fetch('http://api.youndevice.com/api/v1/user/register', {
-		method: 'POST',
-		body: JSON.stringify(data.user)
-	}).then(response => {
-		if (response.type === 'opaque') {
-			console.log('Received a response, but it\'s opaque so can\'t examine it');
-			return;
+	$.ajax({
+		type: "POST",
+		url: "http://api.youndevice.com/api/v1/user/register",
+		data: JSON.stringify(data.user),
+		contentType: "application/json",
+		success: function (data) {
+			if (data) {
+				dispatch(registerSuccess(data));
+			}
+		},
+		error: function (error, textStatus, errorThrown) {
+			dispatch(registerError(error.responseJSON));
+
 		}
-		if (response.status == 200) {
-			response.json().then(function (json) {
-				console.log("RSPONESE", json)
-				dispatch(registerSuccess(json.status));
-			});
-		} else {
-			const error = new Error(response.status);
-			error.response = response;
-			dispatch(registerError(error));
-			throw error;
-		}
-	}).catch(error => {
-		console.log('request failed', error);
 	});
 };
 
