@@ -14,7 +14,8 @@ class RegisterForm extends Component {
 				lastName: "dd",
 				emailId: "",
 				password: ""
-			}
+			},
+			message:""
 		};
 		this.onChange = this.onChange.bind(this);
 		this.onSubmit = this.onSubmit.bind(this);
@@ -33,6 +34,7 @@ class RegisterForm extends Component {
 		if (isAuthenticated.status) {
 			browserHistory.push('/home')
 		}
+		this.setState({message:isAuthenticated.message})
 	}
 	onSubmit = (e)=> {
 		e.preventDefault();
@@ -43,7 +45,7 @@ class RegisterForm extends Component {
 
 	render() {
 
-		const {state:{user: {firstName,lastName,emailId,password}},props:{register:{message}}} = this;
+		const {state:{user: {firstName,lastName,emailId,password},message}} = this;
 		return (<div>
 			<span>{message}
 			</span>
