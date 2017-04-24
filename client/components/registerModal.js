@@ -1,6 +1,7 @@
 import React,{Component} from 'react';
 import {ModalContainer, ModalDialog} from 'react-modal-dialog';
-import RegisterForm from './register.js';
+import RegisterPage from '../containers/register'
+
 
 export default
 class RegisterModalButton extends Component {
@@ -10,7 +11,6 @@ class RegisterModalButton extends Component {
 			showModal: false
 		}
 		this.openModal = () => {
-			console.log(">>>>>>>>>>>>>>>>>>>>.open model")
 			this.setState({showModal: true});
 		}
 		this.closeModal = () => {
@@ -37,7 +37,7 @@ class RegisterModal extends React.Component {
 	render() {
 		return <ModalContainer onClose={this.props.onClose}>
 			<ModalDialog onClose={this.props.onClose} className="example-dialog">
-					<RegisterForm/>
+					<RegisterPage/>
 			</ModalDialog>
 		</ModalContainer>;
 	}

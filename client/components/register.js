@@ -30,10 +30,8 @@ class RegisterForm extends Component {
 	}
 
 	checkRegister(isAuthenticated) {
-		if (isAuthenticated) {
+		if (isAuthenticated.status) {
 			browserHistory.push('/home')
-		} else {
-			this.setState({errorMessage: "Wrong id or password"})
 		}
 	}
 	onSubmit = (e)=> {
@@ -45,8 +43,10 @@ class RegisterForm extends Component {
 
 	render() {
 
-		const {user: {firstName,lastName,emailId,password}} = this.state;
-		return (
+		const {state:{user: {firstName,lastName,emailId,password}},props:{register:{message}}} = this;
+		return (<div>
+			<span>{message}
+			</span>
 				<form onSubmit={this.onSubmit}>
 					<h1>Join Us....... </h1>
 					<div className="form-group">
@@ -75,24 +75,7 @@ class RegisterForm extends Component {
 						<button className="btn btn-primary">Sign Up</button>
 					</div>
 				</form>
+				</div>
 		);
 	}
 }
-import { connect } from 'react-redux'
-import { register } from '../redux/actions/index'
-const mapStateToProps = (state, ownProps) => {
-	return {
-		register: state.register
-	}
-};
-const mapDispatchToProps = (dispatch, ownProps) => {
-	return {
-		onRegister: (user) => dispatch(register(user))
-	}
-};
-const RegisterContainer = connect(
-		mapStateToProps,
-		mapDispatchToProps
-)(RegisterForm);
-
-export default RegisterContainer

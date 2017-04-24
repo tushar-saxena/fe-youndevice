@@ -6,9 +6,9 @@ export const loginSuccess = (status) => ({type: 'LOGIN', status});
 
 export const loginError = (status) => ({type: 'LOGGED_FAILED', status});
 
-export const registerSuccess = (status) => ({type: 'REGISTER', status});
+export const registerSuccess = (data) => ({type: 'REGISTER', data});
 
-export const registerError = () =>({type: 'REGISTER_FAILED'});
+export const registerError = (data) =>({type: 'REGISTER_FAILED',data});
 
 export const login = (loginID, password) => dispatch =>
 		fetch('http://api.youndevice.com/api/v1/login', {

@@ -16,7 +16,6 @@ class Home extends Component {
 	};
 
 	render() {
-		console.log(this.props);
 		return (
 				<div className="overview-page" key="overview">
 					<a className="pull-right btn btn-primary btn-outline btn-rounded" onClick={this.logout}> Logout</a>
